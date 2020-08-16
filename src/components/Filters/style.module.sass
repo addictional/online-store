@@ -1,0 +1,34 @@
+.wrapper
+    overflow: hidden
+    white-space: nowrap
+    border: none
+    .element
+        transition: all 300ms linear
+        line-height: 27px
+        font-size: 20px
+        border: 1px solid #836FE0
+        box-sizing: border-box
+        border-radius: 22px
+        padding: 0 12px 2px 12px
+        display: inline-block
+        margin-right: 20px
+        font-style: normal
+        font-weight: normal
+        text-align: center
+        vertical-align: middle
+        color: #4D4E50
+        background: #ffffff
+        &.active
+            color: #ffffff
+            background: #836FE0
+header
+    .element
+        margin-right: 30px
+@media screen and ( max-width: 767px )
+    .wrapper
+        .element
+            font-weight: bold
+            font-size: 14px
+            line-height: 21px
+            color: #000000
+                            

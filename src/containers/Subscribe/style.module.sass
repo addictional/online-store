@@ -1,0 +1,114 @@
+
+.wrapper
+    // height: 500px
+    background: linear-gradient(95.3deg, #b0b0b08c -1.64%, #0000008a 99.31%), linear-gradient(278.04deg, #4f6cd483 -47.37%, #7e4f8688 132.41%), url("/images/subscribe.png") no-repeat
+    background-blend-mode: soft-light, normal
+    background-size: cover
+    color: #ffffff
+    padding-bottom: 15%
+    padding-top: 15%
+    font-size: 16px
+    .title
+        text-align: center
+        display: block
+        font-family: Montserrat Regular
+        font-size: 1.5em
+        strong
+            font-family: Montserrat ExtraBold
+            font-size: 1.875em
+            font-style: normal
+            font-weight: 800
+            line-height: 114.4%
+            padding: 0 16px
+    .description
+        font-style: normal;
+        font-weight: 350
+        font-size: 1.125em
+        line-height: 92.4%
+        letter-spacing: 0.035em
+        display: block
+        margin: 0
+        text-align: center
+        padding-top: 11px       
+    .form
+        display: flex
+        justify-content: center
+        margin-top: 3.25em
+        input
+            width: 500px
+            box-sizing: border-box
+            display: inline-block
+            background: #ffffff
+            color: #000000
+            line-height: 3.3125em
+            border-radius: 25px
+            font-size: 1.25em
+            transform: translateX(20px)
+            padding: 0 30px
+            &::placeholder
+                font-size: 0.8888888888888888em
+                color: #BBBBBB
+        .submit
+            display: inline-block
+            background: #836FE0
+            color: #ffffff
+            font-style: normal
+            font-weight: normal
+            font-size: 1.25em
+            line-height: 3.3125em
+            padding: 0 32px 0 40px
+            border-top-right-radius: 25px
+            border-bottom-right-radius: 25px
+@media screen and ( max-width: 768px )
+    .wrapper
+        padding-bottom: 10%
+        padding-top: 10%
+        font-size: 12px
+        .form > input
+            width: 380px
+@media screen and ( max-width: 767px )
+    .wrapper
+        padding-bottom: 100px
+        padding-top: 100px
+        .title
+            font-size: 24px
+            height: 73px
+            strong
+                font-size: 45px
+            .first
+                padding-right: 145px
+                display: block
+            .second
+                display: inline-block
+                transform: translate(88px, -25px)
+        .description
+            margin: 0 auto
+            display: block
+            font-size: 14px
+            text-align: left
+            width: 320px
+            letter-spacing: 0.56px        
+        .form
+            display: flex
+            justify-content: center
+            flex-wrap: wrap
+            margin-top: 37px
+            input
+                font-size: 14px
+                line-height: 40px
+                display: block
+                width: 90%
+                transform: none
+                &::placeholder
+                    text-align: center
+            .submit
+                padding: 0 32px 0 32px;
+                font-weight: bold
+                font-size: 14px
+                line-height: 35px
+                margin-top: 20px
+                border-radius: 25px
+
+                
+
+                

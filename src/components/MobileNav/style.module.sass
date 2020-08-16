@@ -1,0 +1,73 @@
+.wrapper
+    height: 65px
+    width: 100%
+    position: fixed
+    bottom: 0
+    border: 1px solid #E4E4E4
+    box-shadow: 0px 4px 11px
+    border-top-left-radius: 10px
+    border-top-right-radius: 10px
+    display: flex
+    justify-content: space-between
+    background: #ffffff
+    z-index: 100
+    // transition: .5s
+    .link
+        user-select: none
+        -webkit-tap-highlight-color: transparent
+        outline: none
+        display: inline-block
+        margin-top: 23px
+        position: relative
+        font-family: Montserrat Bold
+        font-size: 0.75em
+        line-height: 0.938em
+        font-style: normal
+        &:nth-child(3)
+            span
+                left: -15px
+        &:nth-child(4)
+            span
+                left: -26px        
+        &:first-child
+            margin-left: 39px
+        &:last-child
+            margin-right: 39px
+        span, svg
+            transition: transform .5s, opacity .5s
+        span
+            color: #836FE0
+            opacity: 0            
+            transform : scale(0)
+            position: absolute
+            left: -20px
+            top: 5px     
+        &.active
+            svg
+                transform: scale(0)
+                opacity: 0
+            span 
+                opacity: 1
+                transform : scale(1)
+                &::before
+                    content: ''
+                    position: absolute
+                    width: 4px
+                    height: 4px
+                    background: #836FE0
+                    left: calc(50% - 2px)
+                    top: -7px
+                    border-radius: 50%
+    &.isScrolling
+        height: 50px
+        font-size: 13px
+        .link
+            margin-top: 20px
+        svg:not(.active)
+            transform: scale(0.8)          
+
+@media screen and ( min-width: 768px)
+    .wrapper
+        display: none
+                            
+       

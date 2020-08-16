@@ -1,0 +1,90 @@
+.wrapper
+    position: relative
+    width: 600px
+    height: 700px
+    margin: 150px auto 0 auto
+    .element
+        width: 600px
+        position: absolute
+        transition: scale 450ms, transform 450ms, opacity 450ms
+        height: 645px
+        display: flex
+        align-items: center
+        justify-content: center
+        &--disabled
+            svg
+                opacity: 0
+            span
+                opacity: 0
+            &::before
+                content: ''
+                width: 100%
+                background: #ffffff
+                opacity: 0.5
+                position: absolute
+                top: 0
+                bottom: 0   
+    &--stop
+        .element
+            transition: none
+    svg
+        transition: scale 450ms, transform 450ms, opacity 450ms
+        opacity: 1
+        position: absolute
+        top: -47px
+        left: 0
+    span
+        opacity: 1
+        right: -22px
+        font-size: 1.5em
+        position: absolute
+        color: #ffffff
+        line-height: 45px
+        background:  #836FE0
+        padding: 0 24px 0 20px
+        border-radius: 25px
+        top: -47px                
+.buttons
+    width: 100%
+    margin: 0 auto
+    display: flex
+    justify-content: space-around
+    .nav
+        height: 10px
+        padding-top: 10px
+        .circle
+            width: 10px
+            height: 10px
+            background: #DFDFDF
+            border-radius: 50%
+            margin-right: 44px
+            &--active
+                background: #836FE0
+    button
+        width: 40px
+        height: 40px
+        border-radius: 50%
+        border: none
+        background: #FFFFFF
+        box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.06)
+        transform: matrix(-1, 0, 0, 1, 0, 0)
+        div
+            border: 2px solid #A093DC
+            border-width: 0 2px 2px 0
+            display: inline-block
+            padding: 5px
+            &.left
+                transform: rotate(-45deg) translate(-2px,-1px)
+            &.right
+                transform: rotate(135deg) translate(-1px,-2px)
+@media screen and ( max-width: 1023px )
+    .wrapper
+        width: 50vw
+        .element
+            width: 50vw
+            .image-wrapper
+                position: relative
+            img
+                max-width: 100%
+                max-height: 100%    
+            
