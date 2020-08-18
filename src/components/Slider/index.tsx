@@ -1,118 +1,96 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import styles from './style.module.sass';
 
-export interface Props {
-    className?: string;
-    initialOffset?: number;
-    blockScrollOnLastShown?: boolean
-}
-
-
-interface animateFProps {
-    timing(timeFruction: number): number;
-    draw(progress : number): void;
-    duration : number;
-}
-
-interface TouchPoint {
-    x: number;
-    timeStamp: number;
-}
-
-
-
-const Slider : React.FC<Props> = ({children,className,initialOffset,blockScrollOnLastShown}) => {
-    const wrapper = useRef(null as null | HTMLDivElement);
-    const wrapper2 = useRef(null as null | HTMLDivElement);
-    const firstElement = useRef(null as null | HTMLDivElement);
-    const animationRef = useRef([] as Array<number>);
-    const [offset,setOffset] = useState(initialOffset ? -initialOffset :  0);
-    const [lastTouch,setLastTouch] = useState({x: 0,timeStamp: 0} as TouchPoint);
-    const [prevTouch,setPrevTouch] = useState({x: 0,timeStamp: 0} as TouchPoint);
+const Slider : React.FC = ({children}) => {
+    const wrapper = useRef(null as null | HTMLDivElement)
+    const [init,setInit] = useState(true);
+    const [block,setBlock] = useState(false);
+    const [offSet,setOffset] = useState(0);
+    const indexes = useRef({start: 0, end: 2});
+    const touchPos = useRef({ prev: {x: 0, timeStamp: 0},last: {x: 0, timeStamp: 0}});
+    const [data,setData] = useState([] as Array<any>)
+    const cachedData = useRef(React.Children.toArray(children));
+    
+    useEffect(()=>{
+        setDefautlOffset();
+    },[])
 
     useEffect(()=>{
-        let lastPoint = 0;
-        if(!blockScrollOnLastShown){
-            lastPoint = (wrapper2.current as HTMLDivElement).scrollWidth 
-            - (firstElement.current as HTMLDivElement).clientWidth - (initialOffset || 0);
-        } else {
-            lastPoint = (wrapper2.current as HTMLDivElement).scrollWidth - (wrapper2.current as HTMLDivElement).clientWidth;
-        }
-        if(offset < 0 || offset > lastPoint) {
-            cancelAnimation();
-            setOffset(offset < 0 ? 0 - (initialOffset || 0): lastPoint)
-        }
-    },[offset,initialOffset,blockScrollOnLastShown])
+        changeData(-1);
+    },[children])
 
-    const cancelAnimation = () => {
-        let id = animationRef.current.pop();
-        while(id) {
-            cancelAnimationFrame(id);
-            id = animationRef.current.pop();
-        }
-    }
-
-    const animate = ({timing , draw , duration } : animateFProps) => {
-
-        let start = performance.now();
-      
-         requestAnimationFrame(function animate(time) {
-
-          let timeFraction = (time - start) / duration;
-          if (timeFraction > 1) timeFraction = 1;
-      
-          let progress = timing(timeFraction);
-      
-          draw(progress); 
-      
-          if (timeFraction < 1) {
-            animationRef.current.push(requestAnimationFrame(animate));
-          }
-      
-        });
-    }
-
-    const handleTouchStart : React.TouchEventHandler<HTMLDivElement> = ({touches,timeStamp}) => {
-        cancelAnimation();
-        setLastTouch({x: touches[0].clientX,timeStamp}); 
-    }
-
-    const handleTouchMove : React.TouchEventHandler<HTMLDivElement> = ({touches,timeStamp}) => {
-        const lTouch = lastTouch;
-        setLastTouch({x: touches[0].clientX,timeStamp}); 
-        if(lTouch.x) {
-            setPrevTouch(lTouch);
-            const step = lTouch.x - touches[0].clientX;
-            const lastPoint = (wrapper2.current as HTMLDivElement).scrollWidth 
-            - (firstElement.current as HTMLDivElement).clientWidth - (initialOffset || 0);
-            if((offset + step) < 0 || (offset + step) > lastPoint) {
-                return;
+    const changeData = (diff : number) => {
+        if(diff< 0) {
+            if(indexes.current.start - 1 < 0 ) {
+                const lastNode = cachedData.current.pop();
+                if(lastNode){
+                    cachedData.current.unshift(lastNode);
+                }
+            } else {
+                --indexes.current.start;
+                --indexes.current.end;
             }
-            setOffset(offset + step);
-        } 
+            const {start,end} = indexes.current;
+            setData(cachedData.current.slice(start,end+1));
+        } else {
+            if(indexes.current.end + 1 > cachedData.current.length-1 ) {
+                const lastNode = cachedData.current.shift();
+                if(lastNode){
+                    cachedData.current.push(lastNode);
+                }
+            } else {
+                ++indexes.current.start;
+                ++indexes.current.end;
+            }
+            const {start,end} = indexes.current;
+            setData(cachedData.current.slice(start,end+1));
+        }
     }
 
-    const handleTouchEnd : React.TouchEventHandler<HTMLDivElement> = (e) => {
-        const speed = ((prevTouch.x-lastTouch.x )/(lastTouch.timeStamp - prevTouch.timeStamp))*7;
-        const time = Math.abs(speed*0.1*1000);
-        animate({
-            timing: (timeFraction)=>{
-                return 1 - Math.sin(Math.pow(timeFraction, 2));
-            },
-            draw: (number)=>{
-                setOffset(offset => offset+(speed*number))
-            },
-            duration: time
-        });
-        setPrevTouch({x:0,timeStamp: 0});
-        setLastTouch({x: 0,timeStamp: 0});
+    const setDefautlOffset = () =>{
+        if(wrapper.current){
+            setOffset(wrapper.current.clientWidth);
+            setTimeout(()=>{
+                setInit(false);
+            },100)
+        } else {
+            setTimeout(setDefautlOffset,66)
+        }
+    } 
+
+    const handleTouchMove : React.TouchEventHandler<HTMLDivElement> = ({preventDefault,touches,timeStamp}) => {
+        const {prev} = touchPos.current;
+        if(prev.x !== 0) {
+            touchPos.current.prev = {...touchPos.current.last};
+            touchPos.current.last = {x: touches[0].clientX,timeStamp};
+        } else {
+            touchPos.current.prev = {x: touches[0].clientX,timeStamp};
+        }
+    }
+
+    const handleTouchEnd : React.TouchEventHandler<HTMLDivElement> = () => {
+        const {prev,last} = touchPos.current;
+        const diff = prev.x-last.x;
+        const width = wrapper.current?.clientWidth as number
+        const translate = diff < 0 ? offSet - width : offSet + width
+        setOffset(translate);
+    }
+
+    const handleTransitionEnd = () => {
+        setBlock(true);
+        const {prev,last} = touchPos.current;
+        const diff = prev.x-last.x;
+        changeData(diff);
+        const width = wrapper.current?.clientWidth as number
+        setOffset(width);
+        setTimeout(()=>setBlock(false));
     }
 
     return (
-        <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} ref={wrapper} className={`${styles.wrapper} ${className || ''}`}>
-            <div ref={wrapper2} className={styles.container} style={{transform: `translateX(${-offset}px)`}}>
-                {(()=> React.Children.map(children,(child, key)=>{
-                    return <div ref={key === 0 ? firstElement : undefined} className={styles.element} key={key}>{child}</div>
+        <div onTransitionEnd={handleTransitionEnd} ref={wrapper} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className={styles.wrapper}>
+            <div style={{transform: `translateX(${-offSet}px)`}}  className={`${styles.container} ${init || block ? styles.block : ''}`}>
+                {(()=>data.map((child,key)=>{
+                    return <div className={styles.element} key={key}>{child}</div>
                 }))()}
             </div>
         </div>

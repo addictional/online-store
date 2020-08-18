@@ -6,8 +6,10 @@ import Footer from './layout/Footer';
 import ProductRow from './containers/ProductRow';
 import Product from '@models/Product'
 import MainContext from '@components/context';
-import Slider from '@components/Slider'
+import Slider from '@components/Swiper'
 import styles from './App.module.sass'
+import Slider1 from './views/MobileSwiperFirst';
+import FirstSlider from './views/FirstMobileSlider';
 
 
 import {
@@ -43,19 +45,6 @@ const MobileNavData = [
   },
 ] as Array<Link>
 
-
-const products : Array<ProductWheel> = [
-  {image : '/images/cofee-machine.png'},
-  {image : '/images/cofee-machine.png'},
-  {image : '/images/phone.png'},
-  {image : '/images/laptop.png'},
-  {image : '/images/cofee-machine.png'},
-  {image : '/images/cofee-machine.png'},
-  {image : '/images/laptop.png'},
-  {image : '/images/cofee-machine.png'},
-  {image : '/images/phone.png'},
-  {image : '/images/cofee-machine.png'},
-]
 
 
 const Products2 : Array<Product>= [
@@ -228,25 +217,16 @@ function App() {
     <Router>
       <MainContext.Provider value={width}>
         {width > 767 ? <Header/> : undefined}
-
+        <FirstSlider/>
         <ProductRow name="Инструменты" products={Products4} filter={[{name: 'Популярные товары'},{name: 'Для автомобиля'},{name: 'Весенняя колекция'}, {name: 'Дачный сезон'},{name: 'Киберпонедельник'}]}
           slider={
-            <Slider className={styles.bunnerSlider} initialOffset={10}>
-              <img src="/images/Asus 1.png" alt=""/>
-              <img src="/images/Asus 1.png" alt=""/>
-              <img src="/images/Asus 1.png" alt=""/>
-              <img src="/images/Asus 1.png" alt=""/>
-              <img src="/images/Asus 1.png" alt=""/>
-              <img src="/images/Asus 1.png" alt=""/>
-              <img src="/images/Asus 1.png" alt=""/>
-              <img src="/images/Asus 1.png" alt=""/>
-            </Slider>
+            <Slider1/>
           }
         />
 
         {/* <WheelSlider products={products}/> */}
         <ProductRow name="Часы" products={Products3} filter={[{name: 'Шуруповёрт'},{name: 'Лобзики'},{name: 'Дрели'}, {name: 'Наборы инстурментов'}]} slider={
-          <Slider initialOffset={10} className={styles.topSlider}>
+          <Slider initialOffset={10} className={styles.topSlider} blockScrollOnLastShown>
           <div className={styles.topSliderItem}>
               <div>
                   <span className={styles.title}>Часы Casio</span>
@@ -374,6 +354,7 @@ function App() {
     </Router>
   );
 }
+
 
 export default App;
 

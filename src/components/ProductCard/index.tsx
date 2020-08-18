@@ -1,16 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect,useState } from 'react';
 import styles from './style.module.sass';
 import {formatPrice} from '@utilities/index'
 import Product from '@models/Product';
 import MainContext from '@components/context';
+import Spinner from '@components/Spinner';
+import { useInView } from 'react-intersection-observer';
+
 
 
 const ProductCard : React.FC<Product> = ({label,name,params,price,rate,image}) => {
     const width = useContext(MainContext);
+    const [ref, inView] = useInView({triggerOnce: true})
+    const [isImageLoaded,setImageLoaded] = useState(false);
+  
+  
+    useEffect(()=>{
+    if(inView) {
+        const img = new Image();
+        img.src = image;
+        img.onload = ()=>{
+            setImageLoaded(true);
+        }
+    }
+    },[inView,image])
+
     return (
-        <div className={styles.wrapper}>
-            <div className={styles.image}>
-                <img src={image} alt=""/>
+        <div ref={ref} className={styles.wrapper}>
+            <div className={`${styles.image} ${!isImageLoaded && styles.isLoading}`}>
+                {isImageLoaded ? <img src={image} alt=""/> : <Spinner/>}
             </div>
             <div className={styles.info}>
                 <span className={styles.label}>{label}</span>

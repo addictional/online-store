@@ -1,4 +1,10 @@
 .wrapper
     overflow: hidden
     .container
-        display: flex  
+        display: flex
+        transition: transform .5s
+        &.block
+            transition: none
+        .element
+            flex-shrink: 0
+            flex-basis: 100%
