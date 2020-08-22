@@ -1,0 +1,31 @@
+.overlay
+    z-index: 50
+    position: fixed
+    display: flex
+    justify-content: center
+    align-items: center
+    top: 0
+    bottom: 0
+    background: #ffffff
+    width: 100%
+    span 
+        font-family: Comfortaa
+        font-style: normal
+        font-weight: bold
+        font-size: 20px
+        line-height: 22px
+        color: #0E203D
+        z-index: 1
+    .spinner
+        position: absolute
+        width:  63px
+        height: 63px
+        border: 3px solid #836FE0
+        border-radius: 50%
+        border-top-color: transparent
+        animation: spin 1.5s infinite linear
+@keyframes spin
+    0%
+        transform: rotate(0deg)
+    100%
+        transform: rotate(360deg)        

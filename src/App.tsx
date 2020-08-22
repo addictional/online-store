@@ -10,6 +10,10 @@ import Slider from '@components/Swiper'
 import styles from './App.module.sass'
 import Slider1 from './views/MobileSwiperFirst';
 import FirstSlider from './views/FirstMobileSlider';
+import Description from '@components/Description';
+import Loader from '@components/Loader'
+import Banner from '@containers/HuaweiBanner'
+import Search from '@containers/Search';
 
 
 import {
@@ -194,6 +198,7 @@ function App() {
 
   const [data1,setData1] = useState(window.innerWidth < 768 ? Products1.slice(0,4) :  Products1);
   const [data2,setData2] = useState(window.innerWidth < 768 ? Products2.slice(0,4) :  Products2);
+  const [isLoading,setLoadingState] = useState(true);
 
 
   const handleResize = () => {
@@ -209,6 +214,9 @@ function App() {
 
   useEffect(()=>{
     window.addEventListener('resize',handleResize);
+    setTimeout(()=>{
+      setLoadingState(false);
+    },5000);
     return () => {
       window.removeEventListener('resize',handleResize);
     }
@@ -216,16 +224,20 @@ function App() {
   return (
     <Router>
       <MainContext.Provider value={width}>
+        {isLoading? <Loader/> : undefined}
         {width > 767 ? <Header/> : undefined}
+        <div style={{margin: '0 10px',paddingTop: 14}}><Search/></div>
+        <Description>Чаще всего ищут</Description>
         <FirstSlider/>
-        <ProductRow name="Инструменты" products={Products4} filter={[{name: 'Популярные товары'},{name: 'Для автомобиля'},{name: 'Весенняя колекция'}, {name: 'Дачный сезон'},{name: 'Киберпонедельник'}]}
-          slider={
-            <Slider1/>
-          }
-        />
-
+        <ProductRow buttonType="plus" products={Products4} filter={[{name: 'Популярные товары'},{name: 'Для автомобиля'},{name: 'Весенняя колекция'}, {name: 'Дачный сезон'},{name: 'Киберпонедельник'}]} slider={<Slider1/>}>
+          <Description>Лучшие предложения</Description>
+        </ProductRow>  
         {/* <WheelSlider products={products}/> */}
-        <ProductRow name="Часы" products={Products3} filter={[{name: 'Шуруповёрт'},{name: 'Лобзики'},{name: 'Дрели'}, {name: 'Наборы инстурментов'}]} slider={
+        <Banner/>
+        <ProductRow products={data1} filter={[{name: 'Шуруповёрт'},{name: 'Лобзики'},{name: 'Дрели'}, {name: 'Наборы инстурментов'}]}>
+          <Description>Мастерам</Description>
+        </ProductRow>
+        <ProductRow products={Products3} filter={[{name: 'Шуруповёрт'},{name: 'Лобзики'},{name: 'Дрели'}, {name: 'Наборы инстурментов'}]} slider={
           <Slider initialOffset={10} className={styles.topSlider} blockScrollOnLastShown>
           <div className={styles.topSliderItem}>
               <div>
@@ -345,9 +357,12 @@ function App() {
               </div>
           </div>
       </Slider>
-        }/>
-        <ProductRow name="Инструменты" products={data1} filter={[{name: 'Шуруповёрт'},{name: 'Лобзики'},{name: 'Дрели'}, {name: 'Наборы инстурментов'}]}/>
-        <ProductRow name="Одежда" products={data2} filter={[{name: 'Обувь женская'},{name: 'Обувь мужская'},{name: 'Детям'}, {name: 'Платья'}, {name: 'Педжаки'}, {name: 'Шорты'}, {name: 'Трусы'}]}/>
+        }>
+          <Description>Наручные часы</Description>
+        </ProductRow>
+        <ProductRow products={data2} filter={[{name: 'Обувь женская'},{name: 'Обувь мужская'},{name: 'Детям'}, {name: 'Платья'}, {name: 'Педжаки'}, {name: 'Шорты'}, {name: 'Трусы'}]}>
+          <Description>Весенняя коллекция</Description>
+        </ProductRow>
         <MobileNav links={MobileNavData}/>
         <Footer/>
       </MainContext.Provider>

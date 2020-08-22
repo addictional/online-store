@@ -10,24 +10,23 @@ import { useInView } from 'react-intersection-observer';
 
 const ProductCard : React.FC<Product> = ({label,name,params,price,rate,image}) => {
     const width = useContext(MainContext);
-    const [ref, inView] = useInView({triggerOnce: true})
     const [isImageLoaded,setImageLoaded] = useState(false);
   
-  
+    const [ref, inView] = useInView({triggerOnce: true})
     useEffect(()=>{
-    if(inView) {
-        const img = new Image();
-        img.src = image;
-        img.onload = ()=>{
-            setImageLoaded(true);
+        if(inView) {
+            const img = new Image();
+            img.src = image;
+            img.onload = ()=>{
+                setImageLoaded(true);
+            }
         }
-    }
     },[inView,image])
 
     return (
         <div ref={ref} className={styles.wrapper}>
             <div className={`${styles.image} ${!isImageLoaded && styles.isLoading}`}>
-                {isImageLoaded ? <img src={image} alt=""/> : <Spinner/>}
+                {isImageLoaded ? <img src={image} alt=""/> : (inView?  <Spinner/> : undefined)}
             </div>
             <div className={styles.info}>
                 <span className={styles.label}>{label}</span>

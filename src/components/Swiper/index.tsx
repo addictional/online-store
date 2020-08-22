@@ -47,11 +47,8 @@ const Swiper : React.FC<Props> = ({children,className,initialOffset,blockScrollO
     },[offset,initialOffset,blockScrollOnLastShown])
 
     const cancelAnimation = () => {
-        let id = animationRef.current.pop();
-        while(id) {
-            cancelAnimationFrame(id);
-            id = animationRef.current.pop();
-        }
+        animationRef.current.forEach(frameId => cancelAnimationFrame(frameId));
+        animationRef.current = [];
     }
 
     const animate = ({timing , draw , duration } : animateFProps) => {
@@ -95,7 +92,7 @@ const Swiper : React.FC<Props> = ({children,className,initialOffset,blockScrollO
     }
 
     const handleTouchEnd : React.TouchEventHandler<HTMLDivElement> = (e) => {
-        const speed = ((prevTouch.x-lastTouch.x )/(lastTouch.timeStamp - prevTouch.timeStamp))*7;
+        const speed = ((prevTouch.x-lastTouch.x )/(lastTouch.timeStamp - prevTouch.timeStamp))*10;
         const time = Math.abs(speed*0.1*1000);
         animate({
             timing: (timeFraction)=>{

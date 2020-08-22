@@ -9,3 +9,9 @@ export const RoundedButton : React.FC<RoundedButtonProps> = ({className,children
         <button className={`${styles.roundedButton} ${styles.purple} ${className || ''}` }>{children}</button>
     )
 }
+
+export const Plus  : React.FC = () => {
+    return (
+        <div className={`${styles.plus}`}></div>
+    )
+}

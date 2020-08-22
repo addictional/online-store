@@ -4,22 +4,20 @@ import ProductCard from '@components/ProductCard';
 import Product from '@models/Product';
 import Filter from '@components/Filters';
 import Link from '@models/Link';
-import {RoundedButton} from '@components/Button';
+import {RoundedButton,Plus} from '@components/Button';
 
 
 interface Props {
     filter?: Array<Link>
-    name: string;
     products : Array<Product>,
     slider? : React.ReactElement
+    buttonType? : string
 }
 
-const ProductRow : React.FC<Props> = ({filter,name,products,slider}) => {
+const ProductRow : React.FC<Props> = ({children,filter,products,slider,buttonType = 'default'}) => {
     return (
         <React.Fragment>
-            <div className={styles.top}>
-                <p className={styles.name}>{name}</p>
-            </div>
+            {children}
             {filter && filter.length ? <Filter initialOffset={10}  data={filter}/> : undefined}
             <div>
                 {slider}
@@ -27,7 +25,13 @@ const ProductRow : React.FC<Props> = ({filter,name,products,slider}) => {
                     <div className={styles.products}>
                         {(()=>products.map((params,key)=><ProductCard key={key} {...params}/>))()}
                     </div>
-                    <RoundedButton className={styles.buyButton}>Посмотреть все товары</RoundedButton>
+                    {buttonType === 'default' ? 
+                        <RoundedButton className={styles.buyButton}>Посмотреть все товары</RoundedButton> : 
+                        (
+                        <div className={styles.more}>
+                            <Plus/><span className={styles.moreButton}>Больше</span>
+                        </div>
+                        )}
                 </div>
             </div>
         </React.Fragment>

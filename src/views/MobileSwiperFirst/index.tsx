@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Slider from '@components/Swiper';
-import Spinner from '@components/Spinner';
 import { useInView } from 'react-intersection-observer';
 import styles from './style.module.sass'
 
@@ -10,12 +9,14 @@ interface Props {
   }
   
   const ImageLoader: React.FC<Props> = ({path}) => {
-      const [ref, inView] = useInView({triggerOnce: true})
+      const [ref, inView] = useInView({threshold : 0.3,triggerOnce: true})
       const [isImageLoaded,setImageLoaded] = useState(false);
+      const [loading,setLoading] = useState(false);
   
   
       useEffect(()=>{
-        if(inView) {
+        if(inView && !loading && !isImageLoaded) {
+            setLoading(true);
             const image = new Image();
             image.src = path;
             image.onload = ()=>{
@@ -26,7 +27,7 @@ interface Props {
   
       return (
         <div className={styles.element} ref={ref}>
-          {isImageLoaded ? <img src={path} alt=""/> : <Spinner className={styles.loader}/>}
+          {isImageLoaded ? <img src={path} alt=""/> : undefined}
         </div>
       )
   }
