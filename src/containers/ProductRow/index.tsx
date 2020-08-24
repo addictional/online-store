@@ -18,9 +18,7 @@ const ProductRow : React.FC<Props> = ({children,filter,products,slider,buttonTyp
     return (
         <React.Fragment>
             {children}
-            {filter && filter.length ? <Filter initialOffset={10}  data={filter}/> : undefined}
             <div>
-                {slider}
                 <div className={styles.wrapper}>
                     <div className={styles.products}>
                         {(()=>products.map((params,key)=><ProductCard key={key} {...params}/>))()}
