@@ -8,7 +8,7 @@ import { useInView } from 'react-intersection-observer';
 
 
 
-const ProductCard : React.FC<Product> = ({label,name,params,price,rate,image}) => {
+const ProductCard : React.FC<Product & {type : string}> = ({label,name,params,price,rate,image,type,imgHeight}) => {
     const width = useContext(MainContext);
     const [isImageLoaded,setImageLoaded] = useState(false);
   
@@ -22,35 +22,47 @@ const ProductCard : React.FC<Product> = ({label,name,params,price,rate,image}) =
             }
         }
     },[inView,image])
+    
+    const getType = () => {
+        switch(type) {
+            case 'default':
+                return '';
+            case 'solo': 
+                return styles.solo;    
+        }
+    }
 
+    const imgStyle = imgHeight && type==='default'? {height : imgHeight} : {}
     return (
-        <div ref={ref} className={styles.wrapper}>
-            <div className={`${styles.image} ${!isImageLoaded && styles.isLoading}`}>
+        <div ref={ref} className={`${styles.wrapper} ${getType()}` }>
+            <div style={imgStyle} className={`${styles.image} ${!isImageLoaded && styles.isLoading}`}>
                 {isImageLoaded ? <img src={image} alt=""/> : (inView?  <Spinner/> : undefined)}
             </div>
-            <div className={styles.info}>
-                <span className={styles.label}>{label}</span>
-                <span className={styles.name}>{name}</span>
-                <span className={styles.params}>{params || <br/>}</span>
-                <span className={styles.price}>{formatPrice(price)}</span>
-            </div>
-            <div className={styles.rating}>
-                <div className={styles['rating-upper']} style={{width: `${rate*100}%`}}>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
+            <div className={styles.descContainer}>
+                <div className={styles.info}>
+                    <span className={styles.label}>{label}</span>
+                    <span className={styles.name}>{name}</span>
+                    <span className={`${styles.params} ${!params ? styles.empty : ''}`}>{params || <br/>}</span>
+                    <span className={styles.price}>{formatPrice(price)}</span>
                 </div>
-                <div className={styles['rating-lower']}>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
-                    <span>★</span>
+                <div className={styles.rating}>
+                    <div className={styles['rating-upper']} style={{width: `${rate*100}%`}}>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                    </div>
+                    <div className={styles['rating-lower']}>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                        <span>★</span>
+                    </div>
                 </div>
-            </div>
                 {width < 768 ? <button className={styles.addToBasket}>В корзину</button> : undefined}
+            </div>
         </div>
     );
 }

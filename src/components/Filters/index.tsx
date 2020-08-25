@@ -7,16 +7,17 @@ import Slider from '@components/Swiper'
 interface Props {
     spaceBetween?: number,
     data: Array<Link>,
-    initialOffset?: number
+    initialOffset?: number,
+    className?: string
 }
 
-const Filter : React.FC<Props> = ({spaceBetween,data,initialOffset}) =>{
+const Filter : React.FC<Props> = ({spaceBetween,data,initialOffset,className}) =>{
     return (
         <Slider blockScrollOnLastShown initialOffset={initialOffset || 0} className={styles.wrapper}>
             {(()=>data.map(({name,href},key)=> {
                     return href ? (
                         <span>
-                            <NavLink key={key} style={{marginRight: spaceBetween || 20}} to="/shit" className={styles.element} activeClassName={styles.active}>
+                            <NavLink key={key} style={{marginRight: spaceBetween || 20}} to="/shit" className={`${styles.element} ${className || ''}`} activeClassName={styles.active}>
                                 {name}
                             </NavLink>
                         </span>

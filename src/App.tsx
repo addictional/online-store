@@ -13,6 +13,7 @@ import {
 
 const MainPage = React.lazy(() => import('@views/main'));
 const CategoriesPage = React.lazy(() => import('@views/categories'));
+const CategoryPage = React.lazy(() => import('@views/category'));
 
 const MobileNavData = [
   {
@@ -66,6 +67,7 @@ function App() {
           <Switch>
             <Route exact path="/" render={()=><MainPage/>}/>
             <Route exact path="/catalog" render={()=><CategoriesPage/>}/>
+            <Route path="/catalog/:id" render={()=><CategoryPage/>}/>
           </Switch>
           <MobileNav links={MobileNavData}/>
           <Footer/>

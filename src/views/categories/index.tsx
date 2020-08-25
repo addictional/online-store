@@ -40,7 +40,7 @@ const Category : React.FC<ItemsProps> = ({title,img}) => {
         }
     },[inView,img])
     return (
-        <Item className={styles.item}>
+        <Item path="/catalog/mobile" className={styles.item}>
             <div ref={ref} className={styles.container}>
                 <span>{title}</span>
                 <img  src={isLoaded ? img : ''} alt=""/>

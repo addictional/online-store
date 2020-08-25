@@ -1,0 +1,58 @@
+.viewAndSort
+    margin: 22px 20px
+    display: flex
+    justify-content: space-between
+    .label
+        font-style: normal
+        font-weight: bold
+        font-size: 16px
+        line-height: 108.4%
+        color: #4D4E50
+    .view
+        width: 18px
+        height: 18px
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-between
+        div
+            transition: .3s
+            width: 7px
+            height: 7px
+            background: #836FE0
+            border-radius: 1px
+        .first
+        .second
+        .third
+        .fourth
+        &.solo
+            align-items: center
+            width: 19px
+            height: 14px
+            .second, .fourth
+                  width: 8px
+                  height: 2px
+            .fourth
+                margin-top: -4px
+            .second
+                margin-bottom: -4px            
+            .first
+                border-radius: 1px 1px 0 0
+            .third
+                border-radius: 0 0 1px 1px                                  
+    
+.loader
+    height: 66px
+    display: flex
+    justify-content: center
+    .spinner
+        width:  63px
+        height: 63px
+        border: 3px solid #836FE0
+        border-radius: 50%
+        border-top-color: transparent
+        animation: spin 1.5s infinite linear
+@keyframes spin
+    0%
+        transform: rotate(0deg)
+    100%
+        transform: rotate(360deg)

@@ -5,4 +5,5 @@ export default interface Product {
     price: number;
     rate: number;
     image: string;
+    imgHeight? : number 
 }

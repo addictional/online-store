@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Subscribe from '../../containers/Subscribe';
+
 import Nav from '@components/FooterNav';
 import styles from './style.module.sass'
 import MainContext from '@components/context'
@@ -8,7 +8,6 @@ const Footer : React.FC = () => {
     const width = useContext(MainContext);
     return (
         <footer className={styles.wrapper}>
-            <Subscribe/>
             {width > 767 ? (
                 <div className={styles.container}>
                     <div className={styles['first-block']}>

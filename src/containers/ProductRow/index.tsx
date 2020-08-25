@@ -8,28 +8,35 @@ import {RoundedButton,Plus} from '@components/Button';
 
 
 interface Props {
-    filter?: Array<Link>
     products : Array<Product>,
-    slider? : React.ReactElement
-    buttonType? : string
+    buttonType? : string,
+    viewType?: string,
 }
 
-const ProductRow : React.FC<Props> = ({children,filter,products,slider,buttonType = 'default'}) => {
+const ProductRow : React.FC<Props> = ({children,products,buttonType = 'default',viewType='default'}) => {
+    const button = () => {
+        switch (buttonType) {
+            case 'plus': 
+                return (
+                    <div className={styles.more}>
+                        <Plus/><span className={styles.moreButton}>Больше</span>
+                    </div>
+                );
+            case 'default':
+                return <RoundedButton className={styles.buyButton}>Посмотреть все товары</RoundedButton>;
+            case 'none':
+                return undefined;       
+        }
+    }
     return (
         <React.Fragment>
             {children}
             <div>
                 <div className={styles.wrapper}>
                     <div className={styles.products}>
-                        {(()=>products.map((params,key)=><ProductCard key={key} {...params}/>))()}
+                        {(()=>products.map((params,key)=><ProductCard type={viewType} key={key} {...params}/>))()}
                     </div>
-                    {buttonType === 'default' ? 
-                        <RoundedButton className={styles.buyButton}>Посмотреть все товары</RoundedButton> : 
-                        (
-                        <div className={styles.more}>
-                            <Plus/><span className={styles.moreButton}>Больше</span>
-                        </div>
-                        )}
+                    {button()}
                 </div>
             </div>
         </React.Fragment>

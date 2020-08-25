@@ -6,7 +6,7 @@
         display: flex
         align-items: center
         justify-content: center
-        height: 192px
+        height: 250px
     .rating 
         display: inline-block
         unicode-bidi: bidi-override
@@ -53,6 +53,8 @@
             font-weight: normal
             font-size: 18px
             line-height: 22px
+            white-space: normal
+            height: 44px
             color: #969696
         .params
             font-family: Montserrat Regular
@@ -80,10 +82,14 @@
                 margin-top: 2px
                 line-height: 15px
                 font-size: 12px
+                height: 30px
             .params
                 margin-top: 7px
                 line-height: 17px
                 font-size: 14px
+                &.empty
+                    line-height: 14px
+                    margin-top: 0
             .price
                 margin-top: 5px
                 line-height: 24px
@@ -107,6 +113,17 @@
             font-style: normal
             font-weight: bold
             font-size: 14px
-            line-height: 21px        
+            line-height: 21px
+        &.solo
+            width: 100%
+            display: flex
+            .image
+                width: 50%
+                height: auto
+                img
+                    width: 70%
+            .descContainer
+                width: 50%
+                margin-top: auto
                                        
 

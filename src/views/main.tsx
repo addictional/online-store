@@ -9,6 +9,7 @@ import ProductRow from '@containers/ProductRow';
 import Banner from '@containers/HuaweiBanner';
 import SwiperCasio from '@containers/SwiperCasio'
 import Filter from '@components/Filters';
+import Subscribe from '@containers/Subscribe';
 
 
 
@@ -190,6 +191,7 @@ const Page : React.FC = () => {
                 <Description>Весенняя коллекция</Description>
                 <Filter initialOffset={10}  data={[{name: 'Обувь женская'},{name: 'Обувь мужская'},{name: 'Детям'}, {name: 'Платья'}, {name: 'Педжаки'}, {name: 'Шорты'}, {name: 'Трусы'}]}/>
             </ProductRow>
+            <Subscribe/>
         </React.Fragment>
     )
 }
