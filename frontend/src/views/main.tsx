@@ -10,6 +10,7 @@ import Banner from '@containers/HuaweiBanner';
 import SwiperCasio from '@containers/SwiperCasio'
 import Filter from '@components/Filters';
 import Subscribe from '@containers/Subscribe';
+import Voice from '@containers/Voice';
 
 
 
@@ -169,6 +170,7 @@ const Page : React.FC = () => {
 
     return (
         <React.Fragment>
+            {/* <Voice/> */}
             <div style={{margin: '0 10px',paddingTop: 14}}><Search/></div>
             <Description>Чаще всего ищут</Description>
             <SliderTop/>
