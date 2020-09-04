@@ -7,7 +7,8 @@
           "@containers/*": ["./containers/*"],
           "@models/*": ["./models/*"],
           "@hooks/*": ["./hooks/*"],
-          "@views/*": ["./views/*"]
+          "@views/*": ["./views/*"],
+          "@store/*": ["./store/*"]
         }
     }
 }
