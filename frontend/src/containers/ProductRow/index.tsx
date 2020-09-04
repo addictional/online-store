@@ -2,9 +2,12 @@ import React from 'react';
 import styles from './style.module.sass';
 import ProductCard from '@components/ProductCard';
 import Product from '@models/Product';
-import Filter from '@components/Filters';
-import Link from '@models/Link';
-import {RoundedButton,Plus} from '@components/Button';
+import {Plus} from '@components/Buttons';
+import {
+    ShowMore,
+    PlusWrapper,
+    PlusDescription
+} from './styles';
 
 
 interface Props {
@@ -18,12 +21,12 @@ const ProductRow : React.FC<Props> = ({children,products,buttonType = 'default',
         switch (buttonType) {
             case 'plus': 
                 return (
-                    <div className={styles.more}>
-                        <Plus/><span className={styles.moreButton}>Больше</span>
-                    </div>
+                    <PlusWrapper to="/catalog/mobile">
+                        <Plus/><PlusDescription>Больше</PlusDescription>
+                    </PlusWrapper>
                 );
             case 'default':
-                return <RoundedButton className={styles.buyButton}>Посмотреть все товары</RoundedButton>;
+                return <ShowMore to="/catalog/mobile">Посмотреть все товары</ShowMore>;
             case 'none':
                 return undefined;       
         }
